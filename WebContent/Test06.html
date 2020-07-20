@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+            showResult();
+        })
+        
+        function showResult(){
+            $.ajax({
+                url: "studentScore.json",
+                success: function(result, status, xhr){
+                    getData(result);
+                }
+            });
+        }
+        function getData(data){
+            $data = $(data);
+
+            var $table = $('<table />').attr({'border': '1', 'id': 'tble'});
+            var $tr = $('<tr />');
+            
+            $tr.append($('<th />').text('customer_no'),
+                $('<th />').text('name'),
+                $('<th />').text('phone'),
+                
+                $('<th />').text('email')
+                ,$('<th />').text('gender'));
+            $table.append($tr);
+            
+            data.forEach(function(o){
+                $tr = $('<tr />');
+                for(i in o){
+                    $td = $('<td />').text(o[i]);
+                    $tr.append($td);
+                }
+                $table.append($tr);
+ 
+            })
+            $('#show').append($table);
+        }
+    </script>
+
+    <p id="show"></p>
+
+</body>
+</html>
